@@ -56,14 +56,3 @@ def select(query):
         return data
     except Exception as e:
         raise e
-
-
-def insert(query, params):
-    try:
-        cur = get_db()
-        cur.execute('INSERT {}'.format(query), params)
-        cur.commit()
-        cur.close()
-        return True
-    except Exception as e:
-        raise e
