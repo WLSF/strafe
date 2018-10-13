@@ -26,20 +26,29 @@ def create_app():
 
 
 @pytest.fixture
-def client():
+def app():
     """
-    Client fixture mocking database calls and App calls to the API
-    :return: app client
+    App fixture mocking database calls and App calls to the API
+    :return: app
     """
     app = create_app()
     db_fd, app.config['DATABASE'] = tempfile.mkstemp()
     app.config['TESTING'] = True
-    client = app.test_client()
+    db.setup_db(app)
 
     with app.app_context():
         db.init_db()
 
-    yield client
+    yield app
 
     os.close(db_fd)
     os.unlink(app.config['DATABASE'])
+
+
+@pytest.fixture
+def client(app):
+    """
+    Client fixture mocking database calls and App calls to the API
+    :return: client
+    """
+    return app.test_client()
