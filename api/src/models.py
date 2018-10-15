@@ -32,7 +32,9 @@ class Channel:
 
         msg = None
 
-        if avg < 5:
+        if not avg:
+            return {'message': 'Channel not found'}
+        elif avg < 5:
             msg = 'Zzz'
         elif avg < 10:
             msg = 'Surviving smoothly'

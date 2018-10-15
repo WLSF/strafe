@@ -31,4 +31,7 @@ def retrieve_mood():
     channel = request.args.get('channel', '')
     response = Channel.get_mood_from(channel)
 
+    if 'message' in response:
+        return jsonify(response), 404
+
     return jsonify(response), 200

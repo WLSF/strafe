@@ -68,19 +68,17 @@ def select_with(columns='*', where=None, group=None):
         raise e
 
 
-def average_minute(channel):
-    minute = get_db().execute(
+def average_query(channel, column):
+    result = get_db().execute(
         """SELECT ROUND(avg(a)) as avg FROM
-                    (SELECT count(*) as a FROM `chats` WHERE `channel`='{}' GROUP BY `created_at`)"""
-            .format(channel)).fetchone()
+                    (SELECT count(*) as a FROM `chats` WHERE `channel`='{}' GROUP BY `{}`)"""
+            .format(channel, column)).fetchone()
 
-    return minute['avg']
+    return result['avg']
+
+def average_minute(channel):
+    return average_query(channel, 'created_at')
 
 
 def average_second(channel):
-    second = get_db().execute(
-        """SELECT ROUND(avg(a)) as avg FROM
-                    (SELECT count(*) as a FROM `chats` WHERE `channel`='{}' GROUP BY `created_at_second`)"""
-            .format(channel)).fetchone()
-
-    return second['avg']
+    return average_query(channel, 'created_at_second')
