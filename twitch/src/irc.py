@@ -74,7 +74,7 @@ class TwitchThread(threading.Thread):
                         TwitchThread.create_datetime_now(),
                         TwitchThread.create_datetime_now_second()
                     ))
-                    logging.info('Colleting message from twitch')
+                    logging.info('Collecting message from twitch')
             except Exception as e:
                 logging.error(e)
                 close_db()
