@@ -1,5 +1,5 @@
 import tempfile
-from twitch.src.db import init_db, close_db, insert_message, db
+from twitch.src.db import init_db, close_db, insert_message
 
 class TestDB(object):
     def test_init_db(self, monkeypatch):
