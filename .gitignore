@@ -21,4 +21,3 @@ htmlcov/
 .coverage
 .coverage.*
 *,cover
-api/db
