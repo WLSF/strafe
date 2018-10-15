@@ -1,4 +1,4 @@
-from api.src.sqlite.db import get_db, select
+from api.src.db import get_db, s_all
 
 
 class TestDB(object):
@@ -9,7 +9,7 @@ class TestDB(object):
 
 
         try:
-            select('* FROM `chats`')
+            s_all()
         except Exception as e:
             assert 'Working outside of application context' in str(e)
 
@@ -21,25 +21,25 @@ class TestDB(object):
             Recorder.called = True
 
         cli = app.test_cli_runner()
-        monkeypatch.setattr('api.src.sqlite.db.init_db', fake_init_db)
+        monkeypatch.setattr('api.src.db.init_db', fake_init_db)
         response = cli.invoke(args=['init-db'])
         assert 'Database up' in response.output
         assert Recorder.called
 
     def test_reading_without_rows(self, app):
         with app.app_context():
-            response = select('* FROM `chats`')
+            response = s_all()
             assert response == []
 
     def test_reading(self, app):
         with app.app_context():
             db = get_db()
             db.execute(
-                "INSERT INTO `chats` (`channel`, `username`, `message`, `created_at`) VALUES(?, ? ,? ,?)",
-                ('shroud', 'whiplk', 'Test message, shroud rules!', '20181106042020')
+                "INSERT INTO `chats` (`channel`, `username`, `message`, `created_at`, `created_at_second`) VALUES(?, ?, ?, ?, ?)",
+                ('shroud', 'whiplk', 'Test message, shroud rules!', '201811060420', '20181106042020')
             )
 
-            response = select('* FROM `chats`')
+            response = s_all()
 
             obj = response.pop()
             assert obj.get('channel') == 'shroud'

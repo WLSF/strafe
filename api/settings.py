@@ -1,2 +1,6 @@
+import os
+
 class Config(object):
-    DATABASE='api/db/strafe.db'
+    DATABASE = os.getenv('DATABASE', '')
+    SERVER = os.getenv('SERVER', '')
+    PORT = int(os.getenv('PORT', ''))

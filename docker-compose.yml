@@ -8,6 +8,8 @@ services:
       - ./api/db/:/api/db
     links:
       - twitch
+    env_file:
+      - api/.env
 
   twitch:
     build: twitch
@@ -15,3 +17,5 @@ services:
       - "49152:49152"
     volumes:
       - ./api/db/:/twitch/db
+    env_file:
+      - twitch/.env
