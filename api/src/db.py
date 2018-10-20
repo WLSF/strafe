@@ -1,4 +1,5 @@
-import sqlite3, click
+import sqlite3
+import click
 from flask import current_app, g
 from flask.cli import with_appcontext
 
@@ -41,7 +42,7 @@ def setup_db(app):
     app.cli.add_command(init_db_command)
 
 
-def s_all():
+def select_all():
     try:
         cur = get_db().execute('SELECT * FROM `chats`')
 
@@ -75,6 +76,7 @@ def average_query(channel, column):
             .format(channel, column)).fetchone()
 
     return result['avg']
+
 
 def average_minute(channel):
     return average_query(channel, 'created_at')

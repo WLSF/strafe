@@ -1,6 +1,6 @@
+import logging
 from flask import Blueprint, request, jsonify
 from api.src.models import Channel
-import logging
 
 logging.basicConfig(level=logging.INFO)
 bp = Blueprint('channels', __name__)

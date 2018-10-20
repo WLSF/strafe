@@ -1,4 +1,4 @@
-from api.src.db import get_db, s_all
+from api.src.db import get_db, select_all
 
 
 class TestDB(object):
@@ -7,9 +7,8 @@ class TestDB(object):
             db = get_db()
             assert db is get_db()
 
-
         try:
-            s_all()
+            select_all()
         except Exception as e:
             assert 'Working outside of application context' in str(e)
 
@@ -28,7 +27,7 @@ class TestDB(object):
 
     def test_reading_without_rows(self, app):
         with app.app_context():
-            response = s_all()
+            response = select_all()
             assert response == []
 
     def test_reading(self, app):
@@ -39,7 +38,7 @@ class TestDB(object):
                 ('shroud', 'whiplk', 'Test message, shroud rules!', '201811060420', '20181106042020')
             )
 
-            response = s_all()
+            response = select_all()
 
             obj = response.pop()
             assert obj.get('channel') == 'shroud'

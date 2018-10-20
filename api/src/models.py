@@ -1,6 +1,6 @@
 import socket
-from flask import current_app, jsonify, Response
-from api.src.db import select_with, average_minute, average_second
+from flask import current_app
+from api.src.db import average_minute, average_second
 
 
 class Channel:
